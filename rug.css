@@ -1,0 +1,181 @@
+html {
+	font-family: 'Helvetica Neue','Helvetica', 'Arial', FreeSans, 'Liberation Sans', 'Nimbus Sans L', sans-serif;
+	color: #333;
+	margin: 0 auto;
+	width: 85%;
+	font-size: 14pt;
+	line-height: 1.8em;
+	margin-top: 0.75em;
+	margin-bottom: 0.75em;
+	background-color: white;
+}
+
+body {
+	background-color: white;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	padding: 0.75em 2em;
+}
+
+/* headings */
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Helvetica Neue','Helvetica', 'Arial', FreeSans, 'Liberation Sans', 'Nimbus Sans L', sans-serif;
+	letter-spacing: -0.05em;
+	font-weight: 900;
+	line-height: 1.18;
+	color: #333;
+	margin: 0;
+}
+
+h1 { font-size: 3em; margin-bottom: 0.25em; }
+h2 { font-size: 2em; margin-bottom: 0.35em; }
+h3 { font-size: 1.5em; margin-bottom: 0.45em; }
+h4 { font-size: 1.2em; margin-bottom: 0.55em; }
+h5 { font-size: 1em; margin-bottom: 0.65em; }
+h6 { font-size: 0.9em; margin-bottom: 0.75em; }
+
+h1 img, h2 img, h3 img, h4 img, h5 img, h6 img { margin: 0; }
+
+/* standard elements */
+
+p, fieldset, table, pre  { margin: 1em 0; }
+
+abbr, acronym { cursor: help; }
+
+abbr, acronym, a, a:link, a:visited {
+	color: #333;
+    text-decoration: none;
+	border-bottom: 1px dotted #333;
+	padding: 2px 0;
+}
+
+a:focus, a:hover {
+	color: #323D3D;
+	background: #FFF6A9;
+	text-decoration:none;
+	border-bottom: none;
+	padding: 2px 0;
+}
+
+strong { font-weight: bold; }
+cite {
+	color: #323D3D; 
+	background: #FFF6A9;
+	font-style: normal;
+	padding: 2px 0;
+}
+dfn, em { font-style: italic; }
+sup { vertical-align: super; font-size: 0.8em; }
+sub { vertical-align: sub; font-size: 0.8em; }
+
+hr {
+	background-color: #EDEDED;
+	height: 2px;
+	margin: 1em 0;
+	border: none;
+}
+
+del { text-decoration: line-through; color: #666; }
+
+blockquote {
+	border-left: 7px solid #E4E3D3;
+	margin: 1.5em 3em;
+	padding-left: 0.8em;
+	font-style: italic;
+	color: #666;
+}
+
+pre { padding-left: 1em; }
+
+pre, code, tt, kbd, samp {
+	background-color: #EDEDED;
+	font-family: Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace;
+	font-size: 0.9em;
+	font-weight: normal;
+	max-height: 700px;
+	line-height: 1.7;
+	width: auto;
+	overflow: auto;
+	white-space: pre-wrap; /* css-3 */
+    white-space: -moz-pre-wrap !important; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+
+/* lists */
+
+ul, ol { margin: 0 0.25em; }
+ol li {	list-style: decimal outside; }
+ul li { list-style: disc outside; }
+li { margin: 0; }
+
+dl { margin-bottom: 1em; }
+dl dt { font-weight: bold; }
+dd { margin-left: 2em;}
+
+/* tables */
+
+table {
+	border-collapse:collapse;
+	border-spacing:0;
+}
+th, td { border: 1px solid; padding: .5em; }
+th { font-weight: bold; text-align: center; }
+
+/* forms */
+
+textarea, input, button, select {
+	font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', 'Helvetica', 'Arial', sans-serif;
+	color: inherit; 
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	background: #F6F6F6;
+	border: 1px solid #DDD;
+	padding: 0.4em;
+	margin-bottom: 0.5em;
+	font-size: 0.9em;
+	display: inline;
+}
+
+textarea:focus, input:focus, select:focus {	border: 1px solid #AAA; }
+
+button, input[type='submit'], input[type='reset'] {
+	color: white; 
+	background: #333;
+	padding: 0.5em;
+	border: none;
+}
+
+input[type='reset'] { background-color: #EDEDED; color: #333; }
+input[type='hidden'] { display: none; }
+
+fieldset { border:1px solid #AAA; padding: 0.75em; }
+
+legend {
+  padding: 0 0.5em;
+  margin: 0;
+  font-variant: small-caps;
+  color: #666;
+}
+
+/* goodies */
+
+p img.left  { float: left; margin: 1em 1em 0.3em 0; }
+p img.right { float: right; margin: 1em 0 0.3em 1em; }
+p img.top  { margin-top: 0; }
+
+p img {	padding: 7px; border: 1px solid #E4E3D3; }
+
+.ok, .info, .error  { padding: .8em; margin-bottom: 1em; }
+
+.ok    { background: #E7EFC2; color: #264609; }
+.info     { background: #FEF6BF; color: #515720; }
+.error      { background: #FCE3E5; color: #8b1f12; }
+
+.ok a  { color: #264409; }
+.info a   { color: #514721; }
+.error a    { color: #8a1f11; }
+
+.hide       { display: none; }

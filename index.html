@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>Riak Futon</title>
+
+		<script src="http://localhost:8098/raw/futon/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="http://localhost:8098/raw/futon/jiak.js"></script>
+    <link rel="stylesheet" href="rug.css" type="text/css" media="screen" charset="utf-8" />
+
+    <script type="text/javascript" charset="utf-8">
+
+      var db = new JiakClient('/jiak/');
+      var bucket = window.location.search.substring(1);
+
+      // db.store({'bucket':'test','object':{'text':'a new note'},'links':[]});
+
+      $(function() {
+        $('#bucket').html(bucket);
+          db.fetch(bucket, '', function(response) {
+            $.each(response.keys, function(i, key) {
+              $('#keys')
+                .append("<li><a href='javascript:;' onclick='show(\"" + key + "\")'>" + key +
+                "</a> => <a href='javascript:;' onclick='remove(\"" + key + "\")'>Remove</a></li>");
+            });
+          });
+      });
+
+      function remove(key) {
+        db.remove(bucket, key);
+      }
+
+      function show(key) {
+        db.fetch(bucket, key, function(response) {
+          $('#document').html("");
+          $.each(response, function(property, value) {
+            $('#document').append("<dt>" + property + "<dt><dd>" + JSON.stringify(value) + "</dd>");
+          });
+        });
+
+      }
+
+    </script>
+
+	</head>
+
+	<body>
+
+    <h1>riak-admin</h1>
+    <h3>Bucket <em id="bucket"></em></h3>
+	  <ul id="keys"></ul>
+    <hr/>
+    <dl id="document"></dl>
+
+	</body>
+
+</html>
