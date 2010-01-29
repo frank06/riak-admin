@@ -32,9 +32,12 @@
       }
 
       function remove(key) {
-        db.remove(bucket, key, function() {
-          $('#keys > #' + uniqueId(bucket, key)).remove();
-        });
+        if (confirm("Sure you want to delete document " + key + " from bucket " + bucket + "?")) {
+          db.remove(bucket, key, function() {
+            $('#keys > #' + uniqueId(bucket, key)).remove();
+            $('#document').html("");
+          });
+        }
       }
 
       function show(key) {
