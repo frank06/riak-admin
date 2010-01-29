@@ -1,6 +1,23 @@
-#!/bin/sh
+#!/bin/bash
 
-curl -X PUT -H 'Content-Type: text/html' --data-binary @index.html http://localhost:8098/raw/riak-admin/index.html
-curl -X PUT -H 'Content-Type: application/json' --data-binary @jiak.js http://localhost:8098/raw/riak-admin/jiak.js
-curl -X PUT -H 'Content-Type: application/json' --data-binary @jquery-1.3.2.min.js http://localhost:8098/raw/riak-admin/jquery-1.3.2.min.js
-curl -X PUT -H 'Content-Type: text/css' --data-binary @rug.css http://localhost:8098/raw/riak-admin/rug.css
+for file in $@
+ do
+  echo "Uploading $file..."
+  case $file in
+    *.html )
+      content_type="Content-Type: text/html"
+      ;;
+    *.js )
+      content_type="Content-Type: text/javascript"
+      ;;
+    *.css )
+      content_type="Content-Type: text/css"
+      ;;
+    *.png )
+      content_type="Content-Type: image/png"
+      ;;
+  esac
+
+  curl --silent -X PUT -H "${content_type}" --data-binary @$file http://localhost:8098/raw/riak-admin/$file;
+
+done
