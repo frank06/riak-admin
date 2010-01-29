@@ -31,12 +31,31 @@
         return bucket + "-" + key;
       }
 
+      function cleanDetailPane() {
+        $('#document').html("");
+      }
+
+      function del(key) {
+        db.remove(bucket, key, function() {
+          $('#keys > #' + uniqueId(bucket, key)).remove();
+        });
+      }
+
       function remove(key) {
         if (confirm("Sure you want to delete document " + key + " from bucket " + bucket + "?")) {
-          db.remove(bucket, key, function() {
-            $('#keys > #' + uniqueId(bucket, key)).remove();
-            $('#document').html("");
+          del(key);
+          cleanDetailPane();
+        }
+      }
+
+      function deleteAll() {
+        if (confirm("Are you ABSOLUTELY sure you want to delete ALL documents from bucket " + bucket + "?")) {
+          db.fetch(bucket, "", function(response) {
+            $.each(response.keys, function(i, key) {
+              del(key);
+            });
           });
+          cleanDetailPane();
         }
       }
 
@@ -60,6 +79,7 @@
 
 	  <div style="float:left; width: 40%">
   	  <ul id="keys"></ul>
+  	  <strong><a href="javascript:;" onclick="deleteAll()">Delete all documents of this bucket</a></strong>
 	  </div>
 	  <div style="float:left; width: 60%">
       <dl id="document"></dl>
