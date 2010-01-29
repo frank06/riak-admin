@@ -12,7 +12,7 @@
     <script type="text/javascript" charset="utf-8">
 
       var db = new JiakClient('/jiak/');
-      var bucket = window.location.hash.substring(1);
+      var bucket = window.location.search.substring(1);
 
       // db.store({'bucket':'test','object':{'text':'a new note'},'links':[]});
 
@@ -41,7 +41,7 @@
         db.fetch(bucket, key, function(response) {
           $('#document').html("");
           $.each(response, function(property, value) {
-            $('#document').append("<dt>" + property + "<dt><dd>" + JSON.stringify(value) + "</dd>");
+            $('#document').append("<dt>" + property + "<dt><dd><pre>" + JSON.stringify(value, null, 2) + "</pre></dd>");
           });
         });
 
@@ -55,10 +55,10 @@
 
     <h3>riak-admin &rarr; <small>bucket <em id="bucket"></em></small></h3>
 
-	  <div style="float:left; width: 30%">
+	  <div style="float:left; width: 40%">
   	  <ul id="keys"></ul>
 	  </div>
-	  <div style="float:left; width: 70%">
+	  <div style="float:left; width: 60%">
       <dl id="document"></dl>
     </div>
 
