@@ -48,7 +48,7 @@
 // "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
 // KIND, either express or implied.  See the License for the
 // specific language governing permissions and limitations
-// under the License.    
+// under the License.
 
 
 function JiakClient(BaseUrl, Opts) {
@@ -96,10 +96,10 @@ JiakClient.prototype.store = function(Object, Callback, NoReturnBody, W, DW, R) 
         req.type = 'POST';
     else
         req.type = 'PUT';
-    
+
     req.url = this.path(Object.bucket);
     if (Object.key) req.url += Object.key;
-    
+
     var q = false;
     if (!(this.opts.noReturnBody || NoReturnBody)) {
         req.url += '?returnbody=true';

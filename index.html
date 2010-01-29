@@ -12,23 +12,29 @@
     <script type="text/javascript" charset="utf-8">
 
       var db = new JiakClient('/jiak/');
-      var bucket = window.location.search.substring(1);
+      var bucket = window.location.hash.substring(1);
 
       // db.store({'bucket':'test','object':{'text':'a new note'},'links':[]});
 
       $(function() {
         $('#bucket').html(bucket);
-          db.fetch(bucket, '', function(response) {
+          db.fetch(bucket, "", function(response) {
             $.each(response.keys, function(i, key) {
               $('#keys')
-                .append("<li><a href='javascript:;' onclick='show(\"" + key + "\")'>" + key +
-                "</a> => <a href='javascript:;' onclick='remove(\"" + key + "\")'>Remove</a></li>");
+                .append("<li id=\"" + uniqueId(bucket, key) + "\"><a href='javascript:;' onclick='show(\"" + key + "\")'>" + key +
+                "</a>  <a href='javascript:;' onclick='remove(\"" + key + "\")'><img src='trash.png' alt='Delete' /></a></li>");
             });
           });
       });
 
+      function uniqueId(bucket, key) {
+        return bucket + "-" + key;
+      }
+
       function remove(key) {
-        db.remove(bucket, key);
+        db.remove(bucket, key, function() {
+          $('#keys > #' + uniqueId(bucket, key)).remove();
+        });
       }
 
       function show(key) {
@@ -47,12 +53,60 @@
 
 	<body>
 
-    <h1>riak-admin</h1>
-    <h3>Bucket <em id="bucket"></em></h3>
-	  <ul id="keys"></ul>
+    <h3>riak-admin &rarr; <small>bucket <em id="bucket"></em></small></h3>
+
+	  <div style="float:left; width: 30%">
+  	  <ul id="keys"></ul>
+	  </div>
+	  <div style="float:left; width: 70%">
+      <dl id="document"></dl>
+    </div>
+
+    <div style="clear:both"></div>
     <hr/>
-    <dl id="document"></dl>
 
 	</body>
 
 </html>
+
+<script type="text/javascript" charset="utf-8">
+//
+//
+// row.find("td").makeEditable({allowEmpty: true,
+//   createInput: function(value) {
+//     if ($("dl", this).length > 0 || $("code", this).text().length > 60) {
+//       return $("<textarea rows='8' cols='40' spellcheck='false'></textarea>");
+//     }
+//     return $("<input type='text' spellcheck='false'>");
+//   },
+//   end: function() {
+//     $(this).children().remove();
+//     $(this).append(_renderValue(doc[row.data("name")]));
+//   },
+//   prepareInput: function(input) {
+//     if ($(input).is("textarea")) {
+//       $(input).makeResizable({vertical: true});
+//     }
+//   },
+//   accept: function(newValue) {
+//     doc[row.data("name")] = JSON.parse(newValue);
+//     page.isDirty = true;
+//   },
+//   populate: function(value) {
+//     return $.futon.formatJSON(doc[row.data("name")]);
+//   },
+//   validate: function(value) {
+//     try {
+//       JSON.parse(value);
+//       return true;
+//     } catch (err) {
+//       var msg = err.message;
+//       if (msg == "parseJSON") {
+//         msg = "Please enter a valid JSON value (for example, \"string\").";
+//       }
+//       $("<div class='error'></div>").text(msg).appendTo(this);
+//       return false;
+//     }
+//   }
+// });
+</script>
