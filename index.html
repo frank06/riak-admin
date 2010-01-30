@@ -5,7 +5,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<title>riak-admin</title>
 
-		<script src="jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="jquery-1.4.1.min.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" src="jiak.js"></script>
     <link rel="stylesheet" href="rug.css" type="text/css" media="screen" charset="utf-8" />
 
@@ -22,7 +22,8 @@
             $.each(response.keys, function(i, key) {
               $('#keys')
                 .append("<li id=\"" + uniqueId(bucket, key) + "\"><a href='javascript:;' onclick='show(\"" + key + "\")'>" + key +
-                "</a>  <a href='javascript:;' onclick='remove(\"" + key + "\")'><img src='trash.png' alt='Delete' /></a></li>");
+                "</a>  <a href='javascript:;' onclick='remove(\"" + key + "\")'><img src='trash.png' alt='Delete' /></a> " +
+                "<a href='javascript:;' onclick='edit(\"" + key + "\")'>edit</a> </li>");
             });
           });
       });
@@ -33,6 +34,16 @@
 
       function cleanDetailPane() {
         $('#document').html("");
+      }
+
+      function edit(key) {
+        $textarea = $("<textarea style='width:90%; height: 300px' />");
+        $button = $("<button style>Save</button>").click(function(e) {
+          // $t = $('#' + key + '-object pre textarea');
+          // alert($t.val());
+          // $('#' + key + '-object pre textarea').unwrap();
+        });
+        $('#' + key + '-object pre').wrapInner($textarea).append($button);
       }
 
       function del(key) {
@@ -63,7 +74,7 @@
         db.fetch(bucket, key, function(response) {
           $('#document').html("");
           $.each(response, function(property, value) {
-            $('#document').append("<dt>" + property + "<dt><dd><pre>" + JSON.stringify(value, null, 2) + "</pre></dd>");
+            $('#document').append("<dt>" + property + "<dt><dd id='" + key + "-" + property + "'><pre>" + JSON.stringify(value, null, 2) + "</pre></dd>");
           });
         });
 
@@ -79,7 +90,7 @@
 
 	  <div style="float:left; width: 40%">
   	  <ul id="keys"></ul>
-  	  <strong><a href="javascript:;" onclick="deleteAll()">Delete all documents of this bucket</a></strong>
+  	  <img src="trash.png" /> <small><a href="javascript:;" onclick="deleteAll()">Delete all documents of this bucket</a></small>
 	  </div>
 	  <div style="float:left; width: 60%">
       <dl id="document"></dl>
