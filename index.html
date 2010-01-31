@@ -22,8 +22,7 @@
             $.each(response.keys, function(i, key) {
               $('#keys')
                 .append("<li id=\"" + uniqueId(bucket, key) + "\"><a href='javascript:;' onclick='show(\"" + key + "\")'>" + key +
-                "</a>  <a href='javascript:;' onclick='remove(\"" + key + "\")'><img src='trash.png' alt='Delete' /></a> " +
-                "<a href='javascript:;' onclick='edit(\"" + key + "\")'>edit</a> </li>");
+                "</a></li>");
             });
           });
       });
@@ -72,7 +71,8 @@
 
       function show(key) {
         db.fetch(bucket, key, function(response) {
-          $('#document').html("");
+          $('#document').html("<a href='javascript:;' onclick='remove(\"" + key + "\")'>delete</a> | " +
+          "<a href='javascript:;' onclick='edit(\"" + key + "\")'>edit</a>");
           $.each(response, function(property, value) {
             $('#document').append("<dt>" + property + "<dt><dd id='" + key + "-" + property + "'><pre>" + JSON.stringify(value, null, 2) + "</pre></dd>");
           });
