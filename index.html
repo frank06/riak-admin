@@ -14,8 +14,6 @@
       var db = new JiakClient('/jiak/');
       var bucket = window.location.search.substring(1);
 
-      // db.store({'bucket':'test','object':{'text':'a new note'},'links':[]});
-
       $(function() {
         $('#bucket').html(bucket);
           db.fetch(bucket, "", function(response) {
@@ -36,13 +34,38 @@
       }
 
       function edit(key) {
-        $textarea = $("<textarea style='width:90%; height: 300px' />");
-        $button = $("<button style>Save</button>").click(function(e) {
-          // $t = $('#' + key + '-object pre textarea');
-          // alert($t.val());
-          // $('#' + key + '-object pre textarea').unwrap();
+        var selector = '#' + key + '-object';
+        var $target = $(selector);
+        var $error = $('<div id="error" class="error"></div>');
+
+        var $textarea = $("<textarea style='width:90%; height: 300px' />");
+        $textarea[0].id = $target[0].id;
+        var $button = $("<button>Save</button>").click(function(e) {
+
+          var json = $(selector).val();
+
+          db.fetch(bucket, key, function(response) {
+            try {
+              response.object = JSON.parse(json);
+              db.store(response, function(doc) {
+                show(key);
+              }, true);
+            } catch (err) {
+              if (!$('#error').length) {
+                $error.text(err.message).prependTo($('#document'));
+              }
+            }
+
+          });
+
         });
-        $('#' + key + '-object pre').wrapInner($textarea).append($button);
+
+        $textarea.append($target.html());
+        var $form = $('<div/>');
+        $form.append($textarea);
+        $form.append($button);
+        $target.replaceWith($form);
+
       }
 
       function del(key) {
@@ -74,7 +97,7 @@
           $('#document').html("<a href='javascript:;' onclick='remove(\"" + key + "\")'>delete</a> | " +
           "<a href='javascript:;' onclick='edit(\"" + key + "\")'>edit</a>");
           $.each(response, function(property, value) {
-            $('#document').append("<dt>" + property + "<dt><dd id='" + key + "-" + property + "'><pre>" + JSON.stringify(value, null, 2) + "</pre></dd>");
+            $('#document').append("<dt>" + property + "<dt><dd><pre id='" + key + "-" + property + "'>" + JSON.stringify(value, null, 2) + "</pre></dd>");
           });
         });
 
@@ -102,45 +125,3 @@
 	</body>
 
 </html>
-
-<script type="text/javascript" charset="utf-8">
-//
-//
-// row.find("td").makeEditable({allowEmpty: true,
-//   createInput: function(value) {
-//     if ($("dl", this).length > 0 || $("code", this).text().length > 60) {
-//       return $("<textarea rows='8' cols='40' spellcheck='false'></textarea>");
-//     }
-//     return $("<input type='text' spellcheck='false'>");
-//   },
-//   end: function() {
-//     $(this).children().remove();
-//     $(this).append(_renderValue(doc[row.data("name")]));
-//   },
-//   prepareInput: function(input) {
-//     if ($(input).is("textarea")) {
-//       $(input).makeResizable({vertical: true});
-//     }
-//   },
-//   accept: function(newValue) {
-//     doc[row.data("name")] = JSON.parse(newValue);
-//     page.isDirty = true;
-//   },
-//   populate: function(value) {
-//     return $.futon.formatJSON(doc[row.data("name")]);
-//   },
-//   validate: function(value) {
-//     try {
-//       JSON.parse(value);
-//       return true;
-//     } catch (err) {
-//       var msg = err.message;
-//       if (msg == "parseJSON") {
-//         msg = "Please enter a valid JSON value (for example, \"string\").";
-//       }
-//       $("<div class='error'></div>").text(msg).appendTo(this);
-//       return false;
-//     }
-//   }
-// });
-</script>
