@@ -2,20 +2,19 @@
 
 ### A Futon-like web interface for Riak
 
-(Well, this is actually not yet true).
-
-Right now functionality is (shamefully) very basic, it's just something I hacked to help me with my Riak-based projects. But this works as a placeholder - I'm looking forward to see tons of forks and pull requests :)
+Well, this is actually not yet true. Help me out if you want to see this improve faster - i am currently accepting pull requests :)
 
 #### Features so far
 
  - Display contents of bucket
- - Display contents of document on click (at the bottom of the page)
- - Remove documents
+ - Display contents of document on click
+ - Edit contents of the document (json.object)
+ - Delete individual documents or all docs of a bucket
 
 #### Usage
 
     git clone you-know-the-rest
-    ./upload.sh
+    ./upload.sh *
 
 You can run `./run.sh` for continuous updates / development - you'll need Ruby and the `bind` gem.
 
