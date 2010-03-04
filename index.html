@@ -95,7 +95,7 @@
         db.get(bucket, key)(function(response) {
           $('#document').html("<a href='javascript:;' onclick='remove(\"" + key + "\")'>delete</a> | " +
           "<a href='javascript:;' onclick='edit(\"" + key + "\")'>edit</a>");
-          $('#document').append("<dt>Data<dt><dd><pre id='" + key + "-data'>" + JSON.stringify(response, null, 2) + "</pre></dd>");
+          $('#document').append("<dt>Object<dt><dd><pre id='" + key + "-object'>" + JSON.stringify(response, null, 2) + "</pre></dd>");
         });
 
       }
