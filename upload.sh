@@ -18,6 +18,6 @@ for file in $@
       ;;
   esac
 
-  curl --silent -X PUT -H "${content_type}" --data-binary @$file http://localhost:8098/raw/riak-admin/$file;
+  curl --silent -X PUT -H "${content_type}" --data-binary @$file http://localhost:8098/riak/riak-admin/$file;
 
 done

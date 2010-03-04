@@ -6,21 +6,21 @@
 		<title>riak-admin</title>
 
 		<script src="jquery-1.4.1.min.js" type="text/javascript" charset="utf-8"></script>
-    <script type="text/javascript" src="jiak.js"></script>
+    <script type="text/javascript" src="riak.js"></script>
+    <script type="text/javascript" src="riak-jquery.js"></script>
     <link rel="stylesheet" href="rug.css" type="text/css" media="screen" charset="utf-8" />
 
     <script type="text/javascript" charset="utf-8">
 
-      var db = new JiakClient('/jiak/');
+      var db = new Riak();
       var bucket = window.location.search.substring(1);
 
       $(function() {
         $('#bucket').html(bucket);
-          db.fetch(bucket, "", function(response) {
+          db.get(bucket)(function(response) {
             $.each(response.keys, function(i, key) {
               $('#keys')
-                .append("<li id=\"" + uniqueId(bucket, key) + "\"><a href='javascript:;' onclick='show(\"" + key + "\")'>" + key +
-                "</a></li>");
+                .append("<li id=\"" + uniqueId(bucket, key) + "\"><a href='javascript:;' onclick='show(\"" + key + "\")'>" + key + "</a></li>");
             });
           });
       });
@@ -44,12 +44,11 @@
 
           var json = $(selector).val();
 
-          db.fetch(bucket, key, function(response) {
+          db.get(bucket, key)(function() {
             try {
-              response.object = JSON.parse(json);
-              db.store(response, function(doc) {
+              db.save(bucket, key, JSON.parse(json), {returnbody: true})(function(doc) {
                 show(key);
-              }, true);
+              });
             } catch (err) {
               if (!$('#error').length) {
                 $error.text(err.message).prependTo($('#document'));
@@ -69,7 +68,7 @@
       }
 
       function del(key) {
-        db.remove(bucket, key, function() {
+        db.remove(bucket, key)(function() {
           $('#keys > #' + uniqueId(bucket, key)).remove();
         });
       }
@@ -83,7 +82,7 @@
 
       function deleteAll() {
         if (confirm("Are you ABSOLUTELY sure you want to delete ALL documents from bucket " + bucket + "?")) {
-          db.fetch(bucket, "", function(response) {
+          db.get(bucket)(function(response) {
             $.each(response.keys, function(i, key) {
               del(key);
             });
@@ -93,12 +92,10 @@
       }
 
       function show(key) {
-        db.fetch(bucket, key, function(response) {
+        db.get(bucket, key)(function(response) {
           $('#document').html("<a href='javascript:;' onclick='remove(\"" + key + "\")'>delete</a> | " +
           "<a href='javascript:;' onclick='edit(\"" + key + "\")'>edit</a>");
-          $.each(response, function(property, value) {
-            $('#document').append("<dt>" + property + "<dt><dd><pre id='" + key + "-" + property + "'>" + JSON.stringify(value, null, 2) + "</pre></dd>");
-          });
+          $('#document').append("<dt>Data<dt><dd><pre id='" + key + "-data'>" + JSON.stringify(response, null, 2) + "</pre></dd>");
         });
 
       }
