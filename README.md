@@ -1,9 +1,5 @@
 ## riak-admin
 
-### A Futon-like web interface for Riak
-
-Well, this is actually not yet true. Help me out if you want to see this improve faster - i am currently accepting pull requests :)
-
 #### Features so far
 
  - Display contents of bucket
@@ -13,7 +9,8 @@ Well, this is actually not yet true. Help me out if you want to see this improve
 
 #### Usage
 
-    git clone you-know-the-rest
+    git clone git://github.com/frank06/riak-admin
+    git submodule foreach git pull
     ./upload.sh *
 
 You can run `./run.sh` for continuous updates / development - you'll need Ruby and the `bind` gem.
