@@ -10,7 +10,7 @@
 #### Usage
 
     git clone git://github.com/frank06/riak-admin
-    git submodule foreach git pull
+    cd riak-admin && git submodule update --init
     ./upload.sh *
 
 You can run `./run.sh` for continuous updates / development - you'll need Ruby and the `bind` gem.
