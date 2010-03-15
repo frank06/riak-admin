@@ -17,6 +17,6 @@ You can run `./run.sh` for continuous updates / development - you'll need Ruby a
 
 Then navigate to
 
-    http://localhost:8098/raw/riak-admin/index.html?bucket
+    http://localhost:8098/riak/riak-admin/index.html?bucket
 
 where _bucket_ is any bucket living in Riak.
