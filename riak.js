@@ -1,1 +1,1 @@
-lib/riak-js/riak.js
+lib/riak-js/lib/riak.js
