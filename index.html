@@ -35,7 +35,10 @@
 
       function edit(key) {
         var selector = '#' + key + '-object';
+        selector = selector.replace(/([\.@])/g, '\\$1');
+        console.log(selector);
         var $target = $(selector);
+        console.log($target);
         var $error = $('<div id="error" class="error"></div>');
 
         var $textarea = $("<textarea style='width:90%; height: 300px' />");
@@ -93,7 +96,7 @@
 
       function show(key) {
         db.get(bucket, key)(function(response) {
-          $('#document').html("<a href='javascript:;' onclick='remove(\"" + key + "\")'>delete</a> | " +
+          $('#document').html("<a href='javascript:;' onclick='edit()'>new</a> | <a href='javascript:;' onclick='remove(\"" + key + "\")'>delete</a> | " +
           "<a href='javascript:;' onclick='edit(\"" + key + "\")'>edit</a>");
           $('#document').append("<dt>Object<dt><dd><pre id='" + key + "-object'>" + JSON.stringify(response, null, 2) + "</pre></dd>");
         });
